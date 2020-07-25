@@ -9,61 +9,24 @@ macro_rules! read {
     };
 }
 
-#[allow(unused_macros)]
-macro_rules! read_str {
-    ($out:ident) => {
-        let mut inner = String::new();
-        io::stdin().read_line(&mut inner).expect("A String");
-        let $out = inner.trim();
-    };
-}
-
-#[allow(unused_macros)]
-macro_rules! read_vec {
-    ($out:ident as $type:ty) => {
-        let mut inner = String::new();
-        io::stdin().read_line(&mut inner).unwrap();
-        let $out = inner
-            .trim()
-            .split_whitespace()
-            .map(|s| s.parse::<$type>().unwrap())
-            .collect::<Vec<$type>>();
-    };
-}
-
 fn fibonacci_sum(n: u64) -> u64 {
     //eprint!("{} ", n);
-    let mut f = vec![0; n as usize];
-
-    if n > 1 {
-        f[0] = 1;
-        //eprint!("0:{} ", f[0]);
-    }
-
-    if n > 2 {
-        f[1] = 2;
-        //eprint!("1:{} ", f[1]);
-    }
+    let mut sum = 0;
 
     if n > 3 {
-        for i in 2..(f.len() - 1) {
-            f[i] = f[i - 2] + f[i -1];
-            if f[i] > n {
-                break;
-            }
-            //eprint!("{}:{} ", i, f[i]);
-        }
-    }
+        let mut f0 = 0;
+        let mut f1 = 1;
 
-    //eprintln!();
-
-    let mut sum = 0;
-    for i in 0..(f.len() - 1) {
-        if (f[i] % 2) == 0 {
-            if f[i] > n {
+        loop {
+            let f2 = f0 + f1;
+            if f2 > n {
                 break;
+            } else if (f2 % 2) == 0 {
+                sum += f2;
             }
-            sum += f[i];
+            let _f0 = f0;
+            f0 = f1;
+            f1 = _f0 + f1;
             //eprint!("{}:{} ", i, f[i]);
         }
     }
