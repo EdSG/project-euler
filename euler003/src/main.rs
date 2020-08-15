@@ -9,11 +9,37 @@ macro_rules! read {
     };
 }
 
+fn is_prime(n: u64) -> bool {
+    eprint!("is_prime({}) ", n);
+    let mut factor = n - 1;
+    while factor > 1 {
+        eprint!("{} ", factor);
+        if ((n % factor) == 0) && (factor > 1) {
+            return false;
+        }
+        factor -= 1;
+    }
+    eprintln!();
+
+    return true;
+}
+
 fn largest_prime_factor(n: u64) -> u64 {
-    eprint!("{} ", n);
+    eprint!("largest_prime_factor({}) ", n);
+    let mut max_factor = n;
     let mut factor = n;
 
-    return factor;
+    while factor > 1 {
+        eprint!("{}:{} ", max_factor, factor);
+        if is_prime(factor) && ((n % factor) == 0) {
+            max_factor = factor;
+            break;
+        }
+        factor -= 1;
+    }
+    eprintln!();
+
+    return max_factor;
 }
 
 fn main() {
